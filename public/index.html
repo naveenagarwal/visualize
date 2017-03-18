@@ -13,109 +13,143 @@
     <script src="https://rawgit.com/masayuki0812/c3/master/c3.js"></script>
     <script src="sankey.js"></script>
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
   </head>
   <style type="text/css" media="screen">
-    html, body {
-      margin: 0;
-      height: 100%
-    }
-
-    input[type="text"] {
-      width: 300px;
-      margin: 5px;
-    }
-
-    select {
-      width: 200px;
-    }
-
-    select[multiple] {
-      height: 200px;
-    }
-
-    #chart-2 .node rect {
-      cursor: move;
-      fill-opacity: .9;
-      shape-rendering: crispEdges;
-    }
-
-    #chart-2 .node text {
-      pointer-events: none;
-      text-shadow: 0 1px 0 #fff;
-    }
-
-    #chart-2 .link {
-      fill: none;
-      stroke: #000;
-      stroke-opacity: .2;
-    }
-
-    #chart-2 .link:hover {
-      stroke-opacity: .5;
-    }
 
   </style>
   <body style="background-color: #e9ebee;">
-    <div id="charts">
-      <div class="charts">
-        <div class="chart-form">
-          <div>
-            <div>
-              <input class="url" type="text" value="https://visualize-poc.herokuapp.com/api/v1/dummy" placeholder="Enter URL" >
-              <input type="submit" value="Analyze" class="analyze">
-              <a href="/recent-grads.csv">Sample Data</a>
+    <div class="container-fluid">
+      <h2>Graphs</h2>
+      <div class="row">
+        <div class="col-xs-3">
+          <ul class="nav nav-pills nav-stacked">
+            <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
+            <li><a data-toggle="pill" href="#chart-container-1">Bar Chart</a></li>
+            <li><a data-toggle="pill" href="#chart-container-2">Sankey Chart</a></li>
+            <li><a data-toggle="pill" href="#chart-container-3">Scatter Chart</a></li>
+          </ul>
+        </div>
+
+        <div id="charts" class="col-xs-9">
+          <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+              <h3>Visualize</h3>
+              <p>Click on one of the charts in the left</p>
+            </div>
+            <div class="charts chart-container tab-pane fade" id="chart-container-1">
+              <div class="chart-form">
+                <div>
+                  <div>
+                    <label>URL</label>
+                    <input class="url" type="text" value="/api/v1/dummy" placeholder="Enter URL" >
+                    <input type="submit" value="Analyze" class="analyze">
+                    <a href="/recent-grads.csv">Sample Data</a>
+                  </div>
+
+                  <div style="width: 35%; float: left;">
+                    <label style="display: block;">Available Dimensions</label>
+                    <select name="measures" class="measures" style="display: block;"></select>
+                    <select name="measures" multiple class="select-measures"></select>
+                  </div>
+                  <div style="width: 50%; float: left">
+                    <label style="display: block;">Available Measures</label>
+                    <select name="dimensions" multiple class="dimensions" style="margin-top: 20px"></select>
+                    <div style="margin-top: -202px; margin-left: 210px;">
+                      <input type="submit" value="Plot" class="plot">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="chart-1" class="chart" style="clear: both; padding-top:100px; text-align: center; height:500px;">
+
+              </div>
             </div>
 
-            <div style="width: 35%; float: left;">
-              <label style="display: block;">Available Measures</label>
-              <select name="measures" class="measures" style="display: block;"></select>
-              <select name="measures" multiple class="select-measures"></select>
+            <div class="charts chart-container tab-pane fade" id="chart-container-2">
+              <div class="chart-form">
+                <div>
+                  <div>
+                    <label>URL</label>
+                    <input class="url-sankey" type="text" value="/api/v1/sankey" placeholder="Enter URL" >
+                    <input type="submit" value="Analyze" class="analyze-sankey">
+                    <a href="/sankey-data.csv">Sample Data</a>
+                  </div>
+
+                  <div style="width: 35%; float: left;">
+                    <label style="display: block;">Sources</label>
+                    <select name="sources" multiple class="select-sources"></select>
+                  </div>
+                  <div style="width: 50%; float: left">
+                    <label style="display: block;">Targets</label>
+                    <select name="targets" multiple class="select-targets"></select>
+                    <div style="margin-top: -202px; margin-left: 210px;">
+                      <input type="submit" value="Plot" class="plot-sankey">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="chart-2" class="chart" style="clear: both; padding-top:100px; text-align: center;width: 50%;">
+
+              </div>
             </div>
-            <div style="width: 50%; float: left">
-              <label style="display: block;">Available Dimensions</label>
-              <select name="dimensions" multiple class="dimensions"></select>
-              <div style="margin-top: -200px; margin-left: 210px;">
-                <input type="submit" value="Plot" class="plot">
+
+            <div class="charts chart-container tab-pane fade" id="chart-container-3">
+              <div class="chart-form">
+                <div>
+                  <div>
+                    <label>URL</label>
+                    <input class="url-scatter" type="text" value="/api/v1/scatter" placeholder="Enter URL" >
+                    <input type="submit" value="Analyze" class="analyze-scatter">
+                    <a href="/scatter-data.csv">Sample Data</a>
+                  </div>
+
+                  <div class="select-axis-container" style="width: 35%; float: left;">
+                    <label style="display: block;">X Axis</label>
+                    <select name="sources" class="select-x-axis"></select>
+                  </div>
+                  <div class="select-axis-container" style="width: 50%; float: left">
+                    <label style="display: block;">Y Axis</label>
+                    <select name="targets" class="select-y-axis"></select>
+                    <div style="margin-left: 210px; margin-top: -22px;">
+                      <input type="submit" value="Plot" class="plot-scatter">
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div id="chart-3" class="chart" style="clear: both; padding-top:100px; text-align: center;width: 50%;">
+
               </div>
             </div>
           </div>
-        </div>
-        <div id="chart-1" class="chart" style="clear: both; padding-top:100px; text-align: center;width: 50%;">
-
-        </div>
-      </div>
-
-      <div class="charts">
-        <div class="chart-form">
-          <div>
-            <div>
-              <input class="url-sankey" type="text" value="https://visualize-poc.herokuapp.com/api/v1/sankey" placeholder="Enter URL" >
-              <input type="submit" value="Analyze" class="analyze-sankey">
-              <a href="/sankey-data.csv">Sample Data</a>
-            </div>
-
-            <div style="width: 35%; float: left;">
-              <label style="display: block;">Sources</label>
-              <select name="sources" multiple class="select-sources"></select>
-            </div>
-            <div style="width: 50%; float: left">
-              <label style="display: block;">Targets</label>
-              <select name="targets" multiple class="select-targets"></select>
-              <div style="margin-top: -200px; margin-left: 210px;">
-                <input type="submit" value="Plot" class="plot-sankey">
-              </div>
-            </div>
-          </div>
-        </div>
-        <div id="chart-2" class="chart" style="clear: both; padding-top:100px; text-align: center;width: 50%;">
 
         </div>
       </div>
     </div>
+
     <script src="bar-chart.js"></script>
     <script src="sankey-chart.js"></script>
+    <script src="scatter-chart.js"></script>
+
     <script src="dimensions-measures.js"></script>
     <script src="sankey-analyze-plot.js"></script>
+    <script src="scatter-analyze-plot.js"></script>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
   </body>
 
 </html>

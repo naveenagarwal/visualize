@@ -1,0 +1,58 @@
+html, body {
+  margin: 0;
+  height: 100%
+}
+
+input[type="text"] {
+  width: 300px;
+  margin: 5px;
+}
+
+select {
+  width: 200px;
+}
+
+select[multiple] {
+  height: 200px;
+}
+
+#chart-2 .node rect {
+  cursor: move;
+  fill-opacity: .9;
+  shape-rendering: crispEdges;
+}
+
+#chart-2 .node text {
+  pointer-events: none;
+  text-shadow: 0 1px 0 #fff;
+}
+
+#chart-2 .link {
+  fill: none;
+  stroke: #000;
+  stroke-opacity: .2;
+}
+
+#chart-2 .link:hover {
+  stroke-opacity: .5;
+}
+
+#chart-3 .axis path,
+#chart-3 .axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+#chart-3 .dot {
+  stroke: #000;
+}
+
+#chart-3 .tooltip-custom {
+  position: absolute;
+  width: 200px;
+  height: 28px;
+  pointer-events: none;
+  font-size: 10px;
+  text-align: start;
+}
